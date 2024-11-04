@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float speed = 1f;
-    [SerializeField] private float jumpTime = 1f;
+    [SerializeField] private PlayerData playerData;
+   
     [SerializeField] private KeyCode keyLeft = KeyCode.LeftArrow;
     [SerializeField] private KeyCode keyRight = KeyCode.RightArrow;
     [SerializeField] private KeyCode space = KeyCode.Space;
@@ -26,25 +26,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(space))
         {
-            jumpTime = speed * Time.deltaTime * 1000;
-            if (jumpTime > 1 )
-            {
-                jumpTime = 1 * Time.deltaTime;
-            }
-           
-            rb.AddForce(Vector2.up * speed * Time.deltaTime * 1000);
+           rb.velocity = new Vector2(rb.velocity.x, playerData.speed * Time.deltaTime * 10000);
 
         }
 
 
         if (Input.GetKey(keyLeft))
         {
-            rb.AddForce(Vector2.left * speed * Time.deltaTime * 1000);
+            transform.localScale = new Vector3(-1, 1, 1);
+            rb.AddForce(Vector2.left * playerData.speed * Time.deltaTime * 10000);
+            
         }
 
         if (Input.GetKey(keyRight))
         {
-            rb.AddForce(Vector2.right * speed * Time.deltaTime * 1000);
+            transform.localScale = new Vector3(1, 1, 1);
+            rb.AddForce(Vector2.right * playerData.speed * Time.deltaTime * 10000);
+            
         }
     }
 }

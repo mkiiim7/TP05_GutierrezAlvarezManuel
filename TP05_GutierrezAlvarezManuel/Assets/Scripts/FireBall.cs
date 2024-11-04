@@ -9,6 +9,7 @@ public class FireBall : MonoBehaviour
     private BoxCollider2D boxCollider;
     [SerializeField] private bool hit;
     [SerializeField] private float direction;
+    [SerializeField] private float lifeTime;
     private void Awake()
     {
 
@@ -23,10 +24,17 @@ public class FireBall : MonoBehaviour
          {
             float movementspeed = playerData.speedFireBall * direction * Time.deltaTime;
             transform.Translate(movementspeed,0,0);
-         }
+            lifeTime += Time.deltaTime;
 
+            if (lifeTime > 1.5f)
+            {
+                hit = true;
+                boxCollider.enabled = false;
+                animator.SetTrigger("Explode");
+            }
+         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         hit = true;
         boxCollider.enabled = false;
@@ -35,6 +43,7 @@ public class FireBall : MonoBehaviour
 
     public void SetDirection (float _direction)
     {
+        lifeTime = 0f;
         direction = _direction;
         gameObject.SetActive(true);
         hit = false;
@@ -45,7 +54,7 @@ public class FireBall : MonoBehaviour
         if(Mathf.Sign(localScalex) != _direction)
         {
           localScalex = -localScalex;
-          transform.localScale = new Vector3(localScalex, Mathf.Abs(transform.localScale.y), transform.localScale.z);
+          transform.localScale = new Vector3(localScalex, transform.localScale.y, transform.localScale.z);
         }
     }
 

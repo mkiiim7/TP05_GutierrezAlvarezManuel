@@ -8,5 +8,11 @@ public class PlayerData : ScriptableObject
 {
     [Header("Movement/Jump")]
     public float speed = 1f;
-   
+    public float speedSalto = 1f;
+    public bool grounded = false;
+
+
+    [Header("Atack")]
+    
+    public float attackCooldown = 1f;
 }

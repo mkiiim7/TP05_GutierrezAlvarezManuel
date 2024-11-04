@@ -17,4 +17,11 @@ public class PlayerData : ScriptableObject
     public float attackCooldown = 1f;
     public float speedFireBall = 6f;
 
+
+    [Header("Health")]
+
+    public float startingHealth = 3;
+
+
+
 }

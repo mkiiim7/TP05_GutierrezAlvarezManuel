@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
+        transform.rotation = Quaternion.identity;
+
         if (Input.GetKey(keyjump) && playerData.grounded && uiMainMenu.pausa == false)
         {
             Jump();

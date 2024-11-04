@@ -6,8 +6,9 @@ public class PlayerAtack : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     private Animator animator;
     private PlayerMovement playerMovement;
-    //[SerializeField] private float cooldownTimmer= 100000000f;
-    //[SerializeField] private float attackCooldown = 0f;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject fireBall;
+
     [SerializeField] private KeyCode keyAttack = KeyCode.W;
     
 
@@ -29,7 +30,8 @@ public class PlayerAtack : MonoBehaviour
     private void Attack()
     {
         animator.SetTrigger("Attack");
-        
+        fireBall.transform.position = firePoint.position;
+        fireBall.GetComponent<FireBall>().SetDirection(Mathf.Sign(transform.localScale.x));
     }
 
 }

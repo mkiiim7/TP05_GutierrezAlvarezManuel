@@ -15,4 +15,6 @@ public class PlayerData : ScriptableObject
     [Header("Atack")]
     
     public float attackCooldown = 1f;
+    public float speedFireBall = 6f;
+
 }

@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private UIMainMENU uiMainMenu;
     private Animator animator;
 
     [SerializeField] private KeyCode keyLeft = KeyCode.LeftArrow;
@@ -16,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        uiMainMenu.pausa = false;
+
     }
     void Start()
     {
@@ -26,35 +29,35 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey(keyjump) && playerData.grounded)
+        if (Input.GetKey(keyjump) && playerData.grounded && uiMainMenu.pausa == false)
         {
             Jump();
 
         }
 
 
-        if (Input.GetKey(keyLeft))
+        if (Input.GetKey(keyLeft) && uiMainMenu.pausa == false)
         {
             transform.localScale = new Vector3(-1, 1, 1);
             rb.AddForce(Vector2.left * playerData.speed * Time.deltaTime * 10000);
             animator.SetBool("Run", true);
 
         }
-        if (Input.GetKeyUp(keyLeft))
+        if (Input.GetKeyUp(keyLeft) && uiMainMenu.pausa == false)
         {
            
             animator.SetBool("Run", false);
 
         }
 
-        if (Input.GetKey(keyRight))
+        if (Input.GetKey(keyRight) && uiMainMenu.pausa == false)
         {
             transform.localScale = new Vector3(1, 1, 1);
             rb.AddForce(Vector2.right * playerData.speed * Time.deltaTime * 10000);
             animator.SetBool("Run", true);
 
         }
-        if (Input.GetKeyUp(keyRight))
+        if (Input.GetKeyUp(keyRight) && uiMainMenu.pausa == false)
         {
 
             animator.SetBool("Run", false);

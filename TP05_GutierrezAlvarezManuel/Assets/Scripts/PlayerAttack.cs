@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerAtack : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private UIMainMENU uiMainMenu;
     private Animator animator;
     private PlayerMovement playerMovement;
     [SerializeField] private Transform firePoint;
@@ -21,7 +22,7 @@ public class PlayerAtack : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(keyAttack)) 
+        if (Input.GetKey(keyAttack) && uiMainMenu.pausa ==false) 
         {
             Attack();
             

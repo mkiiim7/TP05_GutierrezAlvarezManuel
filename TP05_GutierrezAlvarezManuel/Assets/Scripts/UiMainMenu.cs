@@ -1,53 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.Audio;
 
 public class UIMainMENU : MonoBehaviour
 {
-    [SerializeField] private UnityEngine.UI.Button playButton;
-
-    [SerializeField] private UnityEngine.UI.Button exitButton;
-    [SerializeField] private UnityEngine.UI.Button exitIntroMenu;
-
-    [SerializeField] private UnityEngine.UI.Button settingsButton;
-
-
-
-    [SerializeField] private UnityEngine.UI.Button settingsBackButton;
-
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button exitButton;
+    [SerializeField] private Button exitIntroMenu;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button settingsBackButton;
     [SerializeField] private GameObject pausePanel;
-
-
-
     [SerializeField] private GameObject PanelSettings;
-
-    [SerializeField] private UnityEngine.UI.Slider VolumenSlider;
-
-    [SerializeField] public AudioSource audioSourcePlay;
-
-
+    [SerializeField] private Slider VolumenSlider;
+    [SerializeField] public AudioMixer audioMixer;
     public bool pausa = false;
-
-
 
 
     private void Awake()
     {
         playButton.onClick.AddListener(OnPlayButtonClicked);
-
         exitButton.onClick.AddListener(OnExitButtonClicked);
         exitIntroMenu.onClick.AddListener(OnexitIntroMenuClicked);
         settingsButton.onClick.AddListener(OnSettingsButtonClicked);
-
-
-
         settingsBackButton.onClick.AddListener(OnSettingsBackButtonClicked);
-
-        VolumenSlider.onValueChanged.AddListener(OnVolumenChanged);
+        VolumenSlider.onValueChanged.AddListener(OnVolumeChanged);
 
 
 
@@ -88,9 +65,8 @@ public class UIMainMENU : MonoBehaviour
         exitButton.onClick.RemoveAllListeners();
         exitIntroMenu.onClick.RemoveAllListeners();
         settingsButton.onClick.RemoveAllListeners();
-
         settingsBackButton.onClick.RemoveAllListeners();
-
+        VolumenSlider.onValueChanged.RemoveAllListeners();
 
     }
     private void OnPlayButtonClicked()
@@ -123,29 +99,19 @@ public class UIMainMENU : MonoBehaviour
         PanelSettings.SetActive(true);
         pausePanel.SetActive(false);
 
-
-
     }
 
 
 
     private void OnSettingsBackButtonClicked()
     {
-
         PanelSettings.SetActive(false);
         pausePanel.SetActive(true);
-
-
-
-
     }
 
-    private void OnVolumenChanged(float volumen)
+    private void OnVolumeChanged(float volume)
     {
-        audioSourcePlay.volume = volumen;
-
+        audioMixer.SetFloat("MasterVolume", volume);
 
     }
-
-
 }

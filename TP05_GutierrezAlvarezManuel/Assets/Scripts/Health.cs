@@ -11,12 +11,19 @@ public class Health : MonoBehaviour
     private Animator animator;
     public float currentHealth;
     private bool dead;
+    [SerializeField] private AudioSource soundHurt;
+
+    [SerializeField] private float invulnerabilityDuration;
+    [SerializeField] private int numberOfFlashes;
+    private SpriteRenderer spriteRenderer;
 
 
     private void Awake()
     {
         currentHealth = playerData.startingHealth;
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     private void Start()
@@ -36,7 +43,9 @@ public class Health : MonoBehaviour
 
         if (currentHealth > 0 ) 
         {
+            soundHurt.Play();
             animator.SetTrigger("Hurt");
+            StartInvulnerability();
         }
         else 
         {
@@ -57,5 +66,32 @@ public class Health : MonoBehaviour
         SceneManager.LoadScene("GamePlay");
     }
 
+    public void AddHealth (float _value)
+    {
+
+       currentHealth = Mathf.Clamp(currentHealth + _value,0, playerData.startingHealth);
+    }
+
+
+    public void StartInvulnerability()
+    {
+
+        StartCoroutine(Invulnerability());
+    }
+    public IEnumerator Invulnerability ()
+    {
+        Physics2D.IgnoreLayerCollision(14 , 16, true);  //14 es el layer "Player" y 16 el Layer "Enemy"
+        for (int i = 0; i < numberOfFlashes; i++) 
+        {
+            spriteRenderer.color = new Color(1, 0, 0, 0.8f);
+            yield return new WaitForSeconds(invulnerabilityDuration / (numberOfFlashes * 3));
+            spriteRenderer.color = Color.white;
+            yield return new WaitForSeconds(1);
+
+        }
+
+        Physics2D.IgnoreLayerCollision(14, 16, false);
+
+    }
 
 }

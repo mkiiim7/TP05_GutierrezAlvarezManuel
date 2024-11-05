@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private UIMainMENU uiMainMenu;
     private Animator animator;
+    public AudioSource soundJump;
+    
 
     [SerializeField] private KeyCode keyLeft = KeyCode.LeftArrow;
     [SerializeField] private KeyCode keyRight = KeyCode.RightArrow;
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         uiMainMenu.pausa = false;
+        
 
     }
     void Start()
@@ -31,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
         transform.rotation = Quaternion.identity;
 
-        if (Input.GetKey(keyjump) && playerData.grounded && uiMainMenu.pausa == false)
+        if (Input.GetKeyDown(keyjump) && playerData.grounded && uiMainMenu.pausa == false)
         {
             Jump();
 
@@ -70,9 +73,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, playerData.speedSalto * Time.deltaTime * 10000);
+        soundJump.Play() ;
+        rb.velocity = new Vector2(rb.velocity.x, playerData.speedSalto );
         playerData.grounded = false;
         animator.SetBool("Grounded", false);
+       
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

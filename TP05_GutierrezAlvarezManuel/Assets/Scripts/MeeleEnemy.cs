@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+    [SerializeField] private Health health;
     [SerializeField] private EnemyData enemyData;
     private float cooldownTimer = Mathf.Infinity;
     [SerializeField] private BoxCollider2D boxCollider;
@@ -47,7 +48,10 @@ public class NewBehaviourScript : MonoBehaviour
     {
         if (PlayerInSight())
         {
-            playerHealth.TakeDamage(damage);
+            if (health.invulnerable == false)
+            {
+                playerHealth.TakeDamage(damage);
+            }
         }
 
     }

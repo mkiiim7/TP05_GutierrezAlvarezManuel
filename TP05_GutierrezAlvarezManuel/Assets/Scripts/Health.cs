@@ -7,6 +7,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private PlayerData playerData;
     [SerializeField] private UnityEngine.UI.Button playAgainButton;
+    [SerializeField] private UnityEngine.UI.Button exitButton;
     [SerializeField] private GameObject deadPanel;
     private Animator animator;
     public float currentHealth;
@@ -17,6 +18,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private int numberOfFlashes;
     private SpriteRenderer spriteRenderer;
+    public bool invulnerable= false;
 
     private void Awake()
     {
@@ -28,11 +30,24 @@ public class Health : MonoBehaviour
     private void Start()
     {
         playAgainButton.onClick.AddListener(GoToGamePlay);
-       
+        exitButton.onClick.AddListener(OnExitButtonClicked);
+
     }
     private void OnDestroy()
     {
         playAgainButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
+    }
+    private void OnExitButtonClicked()
+    {
+        if (UnityEditor.EditorApplication.isPlaying)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+        else
+        {
+            Application.Quit();
+        }
     }
     public void TakeDamage(float _damage)
     {
@@ -74,7 +89,7 @@ public class Health : MonoBehaviour
 
     public void StartInvulnerability()
     {
-
+        invulnerable = true;
         StartCoroutine(Invulnerability());
     }
     public IEnumerator Invulnerability ()
@@ -88,7 +103,7 @@ public class Health : MonoBehaviour
             yield return new WaitForSeconds(1);
 
         }
-
+        invulnerable = false;
         Physics2D.IgnoreLayerCollision(14, 16, false);
 
     }

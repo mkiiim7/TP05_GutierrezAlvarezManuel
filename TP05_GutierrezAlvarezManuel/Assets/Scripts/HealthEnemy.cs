@@ -35,7 +35,7 @@ public class HealthEnemy : MonoBehaviour
                 
                 
                 animator.SetTrigger("Die");
-                GetComponent<PlayerMovement>().enabled = false;
+                
                 dead = true;
                 
             }

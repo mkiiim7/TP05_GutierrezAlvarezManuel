@@ -9,19 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private UIMainMENU uiMainMenu;
     private Animator animator;
     public AudioSource soundJump;
-    
-
     [SerializeField] private KeyCode keyLeft = KeyCode.LeftArrow;
     [SerializeField] private KeyCode keyRight = KeyCode.RightArrow;
     [SerializeField] private KeyCode keyjump = KeyCode.Space;
     private void Awake()
     {
-
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        uiMainMenu.pausa = false;
-        
-
+        uiMainMenu.pausa = false;  
     }
     void Start()
     {

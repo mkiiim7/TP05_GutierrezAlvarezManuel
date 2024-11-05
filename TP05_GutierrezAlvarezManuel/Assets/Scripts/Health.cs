@@ -12,31 +12,28 @@ public class Health : MonoBehaviour
     public float currentHealth;
     private bool dead;
     [SerializeField] private AudioSource soundHurt;
-
+    [SerializeField] private AudioSource soundGameOver;
+    [SerializeField] private AudioSource musicBackGround;
     [SerializeField] private float invulnerabilityDuration;
     [SerializeField] private int numberOfFlashes;
     private SpriteRenderer spriteRenderer;
-
 
     private void Awake()
     {
         currentHealth = playerData.startingHealth;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
     }
 
     private void Start()
     {
         playAgainButton.onClick.AddListener(GoToGamePlay);
-       ;
+       
     }
     private void OnDestroy()
     {
         playAgainButton.onClick.RemoveAllListeners();
-        
     }
-
     public void TakeDamage(float _damage)
     {
         currentHealth = Mathf.Clamp(currentHealth - _damage,0, playerData.startingHealth);
@@ -51,6 +48,8 @@ public class Health : MonoBehaviour
         {
             if (dead == false) 
             {
+                soundGameOver.Play();
+                musicBackGround.mute = true;
               animator.SetTrigger("Die");
                 GetComponent<PlayerMovement>().enabled = false;
                 dead = true;

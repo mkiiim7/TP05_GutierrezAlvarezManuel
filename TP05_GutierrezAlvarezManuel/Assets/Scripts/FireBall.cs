@@ -12,12 +12,9 @@ public class FireBall : MonoBehaviour
     [SerializeField] private float lifeTime;
     private void Awake()
     {
-
-       
         animator = GetComponent<Animator>();
         boxCollider = GetComponent<BoxCollider2D>();
     }
-
     private void Update()
     {
         if (hit) return;
@@ -57,7 +54,6 @@ public class FireBall : MonoBehaviour
           transform.localScale = new Vector3(localScalex, transform.localScale.y, transform.localScale.z);
         }
     }
-
     private void Deactivate()
     { 
         gameObject.SetActive(false); 

@@ -9,6 +9,7 @@ public class PlayerAtack : MonoBehaviour
     private PlayerMovement playerMovement;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject fireBall;
+    [SerializeField] private AudioSource soundFire;
 
     [SerializeField] private KeyCode keyAttack = KeyCode.W;
     
@@ -30,6 +31,7 @@ public class PlayerAtack : MonoBehaviour
     }
     private void Attack()
     {
+        soundFire.Play();
         animator.SetTrigger("Attack");
         fireBall.transform.position = firePoint.position;
         fireBall.GetComponent<FireBall>().SetDirection(Mathf.Sign(transform.localScale.x));

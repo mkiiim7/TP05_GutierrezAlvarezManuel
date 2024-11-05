@@ -12,7 +12,9 @@ public class UIMainMENU : MonoBehaviour
     [SerializeField] private Button settingsBackButton;
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject PanelSettings;
-    [SerializeField] private Slider VolumenSlider;
+    [SerializeField] private Slider VolumenSlider1;
+    [SerializeField] private Slider VolumenSlider2;
+    [SerializeField] private Slider VolumenSlider3;
     [SerializeField] public AudioMixer audioMixer;
     public bool pausa = false;
 
@@ -24,12 +26,11 @@ public class UIMainMENU : MonoBehaviour
         exitIntroMenu.onClick.AddListener(OnexitIntroMenuClicked);
         settingsButton.onClick.AddListener(OnSettingsButtonClicked);
         settingsBackButton.onClick.AddListener(OnSettingsBackButtonClicked);
-        VolumenSlider.onValueChanged.AddListener(OnVolumeChanged);
-
-
+        VolumenSlider1.onValueChanged.AddListener(OnVolumeChanged1);
+        VolumenSlider2.onValueChanged.AddListener(OnVolumeChanged2);
+        VolumenSlider3.onValueChanged.AddListener(OnVolumeChanged3);
 
     }
-
 
     private void Update()
     {
@@ -55,9 +56,7 @@ public class UIMainMENU : MonoBehaviour
                 Time.timeScale = 1;
             }
         }
-
     }
-
 
     private void OnDestroy()
     {
@@ -66,7 +65,9 @@ public class UIMainMENU : MonoBehaviour
         exitIntroMenu.onClick.RemoveAllListeners();
         settingsButton.onClick.RemoveAllListeners();
         settingsBackButton.onClick.RemoveAllListeners();
-        VolumenSlider.onValueChanged.RemoveAllListeners();
+        VolumenSlider1.onValueChanged.RemoveAllListeners();
+        VolumenSlider2.onValueChanged.RemoveAllListeners();
+        VolumenSlider3.onValueChanged.RemoveAllListeners();
 
     }
     private void OnPlayButtonClicked()
@@ -109,9 +110,19 @@ public class UIMainMENU : MonoBehaviour
         pausePanel.SetActive(true);
     }
 
-    private void OnVolumeChanged(float volume)
+    private void OnVolumeChanged1(float volume)
     {
         audioMixer.SetFloat("MasterVolume", volume);
+
+    }
+    private void OnVolumeChanged2(float volume)
+    {
+        audioMixer.SetFloat("MusicVolume", volume);
+
+    }
+    private void OnVolumeChanged3(float volume)
+    {
+        audioMixer.SetFloat("FXVolume", volume);
 
     }
 }
